@@ -1,0 +1,3 @@
+cube(`UserData`, {
+    sql: ``
+});

@@ -1,4 +1,4 @@
-cube(`aa`, {
+cube(`bb`, {
   sql: `
     SELECT 
       *,

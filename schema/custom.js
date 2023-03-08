@@ -1,10 +1,9 @@
-cube(`custom`, {
+cube(`aaa`, {
     sql: `
         SELECT 
-            * 
+            *
         FROM 
-            vad.user_bandibull_facebook_campaignInfo a
-            join vad.user_bandibull_facebook_insight_campaign b
+            vad.user_bandibull_facebook_campaignInfo
     `,
     
     preAggregations: {
@@ -12,47 +11,71 @@ cube(`custom`, {
       // Learn more here: https://cube.dev/docs/caching/pre-aggregations/getting-started
     },
     
-    // joins: {
-    //     UserBandibullFacebookInsight: {
-    //         sql: `${CUBE.campaigninfoId} = ${UserBandibullFacebookInsight.campaignid}`,
-    //         relationship: `hasMany`
-    //     },
-    //     UserBandibullFacebookInsightCampaign: {
-    //         sql: `${CUBE.campaigninfoId} = ${UserBandibullFacebookInsightCampaign.campaignCampaignId}`,
-    //         relationship: `hasMany`
-    //     },
-    //     UserBandibullFacebookInsightCampaignVideoPlayActions: {
-    //         sql: `${UserBandibullFacebookInsightCampaign}._id = ${UserBandibullFacebookInsightCampaignVideoPlayActions}._id`,
-    //         relationship: `hasMany`
-    //     },
-    // },
+    joins: {
+        UserBandibullFacebookInsight: {
+            sql: `${CUBE.campaigninfoId} = ${UserBandibullFacebookInsight.campaignid}`,
+            relationship: `belongsTo`
+        },
+        UserBandibullFacebookInsightCampaign: {
+            sql: `${CUBE.campaigninfoId} = ${UserBandibullFacebookInsightCampaign.campaignCampaignId}`,
+            relationship: `belongsTo`
+        },
+        // UserBandibullFacebookInsightCampaignVideoPlayActions: {
+        //     sql: `${UserBandibullFacebookInsightCampaign}._id = ${UserBandibullFacebookInsightCampaignVideoPlayActions}._id`,
+        //     relationship: `hasMany`
+        // },
+        
+    },
     
     measures: {
-        Reach: {
-            type: `sum`,
-            sql: `a.campaignReach`,
-            title: `도달`,
-          },
+      Reach: {
+        type: `sum`,
+        sql: `${UserBandibullFacebookInsightCampaign.campaignReach}`,
+        title: `도달`,
+      },
+      // Impressions: {
+      //   type: `sum`,
+      //   sql: campaignImpressions,
+      //   title: `Impressions`,
+      // },
+      // Spend: {
+      //   type: `sum`,
+      //   sql: campaignSpend,
+      //   description: `지출금액`,
+      // },
+      // Cpc: {
+      //   type: `sum`,
+      //   sql: campaignCpc,
+      // },
+      // Clicks: {
+      //   type: `sum`,
+      //   sql: campaignClicks,
+      // },
     },
     
     dimensions: {
-
-        
-
-
+      _id: {
+        sql: `_id`,
+        type: `string`,
+        primaryKey: true,
+      },
       
       campaigninfoId: {
-        sql: `a.campaignInfo.id`,
+        sql: `${CUBE}.\`campaignInfo.id\``,
         type: `string`,
         title: `Campaigninfo.id`
       },
       
       campaigninfoName: {
-        sql: `a.campaignInfo.name`,
+        sql: `${CUBE}.\`campaignInfo.name\``,
         type: `string`,
         title: `Campaigninfo.name`
       },
       
+      campaignid: {
+        sql: `${UserBandibullFacebookInsight.campaignid}`,
+        type: `string`
+      },
     },
     
     dataSource: `default`

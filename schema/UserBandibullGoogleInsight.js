@@ -1,5 +1,5 @@
-cube(`UserBandibullFacebookInsight`, {
-  sql: `SELECT * FROM vad.user_bandibull_facebook_insight`,
+cube(`UserBandibullGoogleInsight`, {
+  sql: `SELECT * FROM vad.user_bandibull_google_insight`,
   
   preAggregations: {
     // Pre-Aggregations definitions go here
@@ -7,26 +7,7 @@ cube(`UserBandibullFacebookInsight`, {
   },
   
   joins: {
-    UserBandibullFacebookInsightAd: {
-      sql: `${CUBE}._id = ${UserBandibullFacebookInsightAd}._id`,
-      relationship: `hasMany`
-    },
-    UserBandibullFacebookInsightCampaign: {
-      sql: `${CUBE}._id = ${UserBandibullFacebookInsightCampaign}._id`,
-      relationship: `hasMany`
-    },
-    UserBandibullFacebookInsightCampaignVideoPlayActions: {
-      sql: `${CUBE}._id = ${UserBandibullFacebookInsightCampaignVideoPlayActions}._id`,
-      relationship: `hasMany`
-    },
-    UserBandibullFacebookCampaigninfo: {
-      sql: `${CUBE.campaignid} = ${UserBandibullFacebookCampaigninfo.campaigninfoId}`,
-      relationship: `hasMany`
-    },
-    // UserBandibullFacebookInsight: {
-    //   sql: `${CUBE}._id = ${UserBandibullFacebookInsight}._id`,
-    //   relationship: `hasMany`
-    // },
+    
   },
   
   measures: {
@@ -37,11 +18,6 @@ cube(`UserBandibullFacebookInsight`, {
   },
   
   dimensions: {
-    _id: {
-      sql: `_id`,
-      type: `string`,
-      primaryKey: true,
-    },
     accountAccountId: {
       sql: `${CUBE}.\`account.account_id\``,
       type: `string`,
@@ -102,8 +78,8 @@ cube(`UserBandibullFacebookInsight`, {
       title: `Account.objective`
     },
     
-    accountReach: {
-      sql: `${CUBE}.\`account.reach\``,
+    accountReachs: {
+      sql: `${CUBE}.\`account.reachs_aaa\``,
       type: `string`,
       title: `Account.reach`
     },

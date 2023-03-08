@@ -1,5 +1,5 @@
-cube(`UserBandibullFacebook`, {
-  sql: `SELECT * FROM vad.user_bandibull_facebook`,
+cube(`UserBandibullGoogle`, {
+  sql: `SELECT * FROM vad.user_bandibull_google`,
   
   preAggregations: {
     // Pre-Aggregations definitions go here
@@ -18,12 +18,6 @@ cube(`UserBandibullFacebook`, {
   },
   
   dimensions: {
-    _id: {
-      sql: `_id`,
-      type: `string`,
-      primaryKey: true,
-    },
-    
     accountinfoAccountId: {
       sql: `${CUBE}.\`accountInfo.account_id\``,
       type: `string`,
@@ -109,7 +103,7 @@ cube(`UserBandibullFacebook`, {
     },
     
     apiid: {
-      sql: `${CUBE}.\`apiId\``,
+      sql: `${CUBE}.\`apiIds\``,
       type: `string`
     },
     

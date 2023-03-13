@@ -1,186 +1,82 @@
 cube(`bb`, {
-  sql: `
-    SELECT 
-      *,
-      'facebook' AS row_type 
-    FROM 
-      vad.user_bandibull_facebook_insight
-    WHERE apiid = 'adAccounts'
-    UNION ALL
-    SELECT 
-      *,
-      'google' AS row_type 
-    FROM 
-      vad.user_bandibull_google_insight
-    WHERE apiid = 'adAccounts'
-  `,
+  sql: `SELECT * FROM vad2.user_facebook`,
     
-  preAggregations: {
-    // orderStatuses: {
-    //     type: `rollup`,
-    //     measures: [totalReach],
-    //     dimensions: [reach],
-    // },
-  },
+  preAggregations: {},
     
-  // joins: {
-    // UserBandibullGoogle: {
-    //   sql: `SELECT * FROM vad.user_bandibull_google`,
-    //   relationship: `hasMany`
-    // },
-
-    // UserBandibullFacebook: {
-    //   sql: `SELECT * FROM vad.user_bandibull_facebook`,
-    //   relationship: `hasMany`
-    // },
-
-    // UserBandibullFacebookInsight: {
-    //   sql: `${UserBandibullFacebook.campaigninfoId} = ${UserBandibullFacebookInsight.campaignid}`,
-    //   relationship: `belongsTo`
-    // },
-
-      // UserBandibullFacebookInsightCampaign: {
-      //     sql: `${CUBE.campaigninfoId} = ${UserBandibullFacebookInsightCampaign.campaignCampaignId}`,
-      //     relationship: `belongsTo`
-      // },
-      // UserBandibullFacebookInsightCampaignVideoPlayActions: {
-      //     sql: `${UserBandibullFacebookInsightCampaign}._id = ${UserBandibullFacebookInsightCampaignVideoPlayActions}._id`,
-      //     relationship: `hasMany`
-      // },
-      
-  // },
+  joins: {},
     
     measures: {
 
-      totalReach: {
+      ctr_campaign: {
+          type: `sum`,
+          sql: `${CUBE}.\`campaignInsights.ctr\``,
+      },
+
+      cpc_campaign: {
+          type: `sum`,
+          sql: `${CUBE}.\`campaignInsights.cpc\``,
+      },
+
+      clicks: {
+          type: `sum`,
+          sql: `clicks`,
+      },
+
+      spend: {
         type: `sum`,
-        sql: reach,
-        // sql: `${facebookReach} + ${googleReach}`,
+        sql: `spend`,
       },
 
-      // accountReach: {
-      //   type: `string`,
-      //   sql: `accountReach`,
-      //   filters: [{ sql: `${CUBE}.row_type = 'facebookInsight'` }],
-      // },
-
-      // Impressions: {
-      //   type: `sum`,
-      //   sql: campaignImpressions,
-      //   title: `Impressions`,
-      // },
-      // Spend: {
-      //   type: `sum`,
-      //   sql: campaignSpend,
-      //   description: `지출금액`,
-      // },
-      // Cpc: {
-      //   type: `sum`,
-      //   sql: campaignCpc,
-      // },
-      // Clicks: {
-      //   type: `sum`,
-      //   sql: campaignClicks,
-      // },
-
-
-      // facebookCampaignName: {
-      //   sql: `campaigninfoName`,
-      //   type: `string`,
-      //   filters: [{ sql: `${CUBE}.row_type = 'facebookCampaigninfo'` }],
-      // },
-
-      facebookReach: {
-        sql: `accountReach`,
-        type: `string`,
-        filters: [{ sql: `${CUBE}.row_type = 'facebook'` }],
+      cpm: {
+        type: `sum`,
+        sql: `cpm`,
       },
 
-      googleReach: {
-        sql: `accountReachs`,
-        type: `string`,
-        filters: [{ sql: `${CUBE}.row_type = 'google'` }],
-      },
-    },
-    
-    dimensions: {
-      // _id: {
-      //   sql: `_id`,
-      //   type: `string`,
-      //   primaryKey: true,
-      // },
-      
-      // facebookAccountinfoId: {
-      //   sql: `${Users.userId}`,
-      //   type: `string`,
-      //   filters: [{ sql: `${Users.userId} = 'bandibull'` }],
-      // },
-      
-      // campaignName: {
-      //   sql: `${UserBandibullFacebookCampaigninfo.campaigninfoName}`,
-      //   type: `string`,
-      //   title: `Campaigninfo.name`
-      // },
-
-      // channel: {
-      //   sql: `${CUBE}.\`name\``,
-      //   type: `string`,
-      //   // filters: [{ sql: `${CUBE}.row_type = 'facebook'` }],
-      // },
-
-      type: {
-        sql: `${CUBE}.row_type`,
-        type: `string`,
-        // filters: [{ sql: `${CUBE}.row_type = 'facebook'` }],
-      },
-
-      createdDay: {
-        sql: `${CUBE}.createdDay`,
-        type: `string`,
+      impressions: {
+        type: `sum`,
+        sql: `impressions`,
       },
 
       reach: {
-        sql: `${CUBE}.\`account.reach\``,
-        type: `string`,
+          type: `sum`,
+          sql: `reach`,
       },
 
-      ctr: {
-        sql: `${CUBE}.\`account.ctr\``,
-        type: `string`,
+      frequency: {
+          type: `sum`,
+          sql: `frequency`,
       },
-      
-      // reach: {
-      //   sql: `${CUBE}.\`account.reach\``,
-      //   type: `string`,
-        // filters: [{ sql: `${CUBE}.row_type = 'facebook'` }],
-      // },
-
-      // accountReachs: {
-      //   sql: `${CUBE.account.reachs_aaa}`,
-      //   type: `string`,
-      // },
-
-      // reach: {
-      //   sql: `
-      //     case
-      //       when ${CUBE}.\`row_type\` is 'facebook' then ${facebookReach}
-      //       when ${CUBE}.\`row_type\` is 'google' then ${googleReach}
-      //     end
-      //   `,
-      //   type: `string`,
-      //   // filters: [{ sql: `${CUBE}.row_type = 'facebook'` }],
-      // },
-
-      // google: {
-      //   sql: `${googleApiId}`,
-      //   type: `string`,
-      //   // filters: [{ sql: `${CUBE}.row_type = 'google'` }],
-      // },
 
     },
+    
+    dimensions: {
 
-    
-    
-    // dataSource: `default`
-  });
-  
+      _id: {
+        sql: `_id`,
+        type: `string`,
+        primaryKey: true,
+      },
+
+      title: {
+          sql: `${CUBE}.\`campaignInsights.campaign_name\``,
+          type: `string`,
+      },
+      
+      userId: {
+        sql: `userId`,
+        type: `string`,
+      },
+
+      apiId: {
+        sql: `apiId`,
+        type: `string`,
+      },
+
+
+      createdAt: {
+          sql: `createdAt`,
+          type: `time`
+      }
+
+    },
+});

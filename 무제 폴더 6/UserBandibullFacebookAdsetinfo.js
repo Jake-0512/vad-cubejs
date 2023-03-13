@@ -14,6 +14,11 @@ cube(`UserBandibullFacebookAdsetinfo`, {
     count: {
       type: `count`,
       drillMembers: [adsetinfoAccountId, adsetinfoCampaignId, adsetinfoCampaignId, adsetinfoCreatedTime, adsetinfoId, adsetinfoName, adsetinfoPromotedObjectPageId, adsetinfoSourceAdsetId, adsetinfoSourceAdsetId, adsetinfoUpdatedTime]
+    },
+    sum: {
+      type: `sum`,
+      sql: `\`adsetInfo.lifetime_budget\``,
+      drillMembers: [adsetinfoAccountId, adsetinfoCampaignId, adsetinfoCampaignId, adsetinfoCreatedTime, adsetinfoId, adsetinfoName, adsetinfoPromotedObjectPageId, adsetinfoSourceAdsetId, adsetinfoSourceAdsetId, adsetinfoUpdatedTime]
     }
   },
   

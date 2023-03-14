@@ -1,4 +1,4 @@
-cube(`aa`, {
+cube(`default`, {
     sql: `
         SELECT 
             userId,
@@ -55,47 +55,58 @@ cube(`aa`, {
     joins: {},
       
       measures: {
-  
+        // ctr: {
+        //     type: `sum`,
+        //     sql: `ctr`,
+        // },
         ctr: {
-            type: `sum`,
-            sql: `ctr`,
+          type: `number`,
+          sql: `ROUND((${clicks}/${impressions})*100, 2)`,
         },
-
+        // cpc: {
+        //     type: `sum`,
+        //     sql: `cpc`,
+        // },
         cpc: {
-            type: `sum`,
-            sql: `cpc`,
+          type: `number`,
+          sql: `ROUND((${spend}/${clicks}), 2)`,
         },
-  
         clicks: {
             type: `sum`,
             sql: `clicks`,
         },
-  
-        spend: {
+        totalSpend: {
           type: `sum`,
           sql: `spend`,
         },
-
-        cpm: {
-          type: `sum`,
-          sql: `cpm`,
+        spend: {
+          type: `number`,
+          sql: `ROUND(${totalSpend}, 2)`,
         },
-
+        // cpm: {
+        //   type: `sum`,
+        //   sql: `cpm`,
+        // },
+        cpm: {
+          type: `number`,
+          sql: `ROUND((${spend}/${impressions})*1000, 2)`,
+        },
         impressions: {
           type: `sum`,
           sql: `impressions`,
         },
-  
         reach: {
             type: `sum`,
             sql: `reach`,
         },
-
+        // frequency: {
+        //     type: `sum`,
+        //     sql: `frequency`,
+        // },
         frequency: {
-            type: `sum`,
-            sql: `frequency`,
+          type: `number`,
+          sql: `ROUND((${impressions}/${reach}), 2)`,
         },
-  
       },
       
       dimensions: {

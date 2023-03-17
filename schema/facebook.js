@@ -94,6 +94,7 @@ cube(`facebook`, {
       sql: `createdAt`,
       type: `time`
     }
-  }
+  },
+  dataSource: `facebook`
 });
 // console.log(`facebook schema defined with dimensions:`, JSON.stringify(facebook.dimensions));

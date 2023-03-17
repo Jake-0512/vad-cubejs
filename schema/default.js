@@ -133,4 +133,7 @@ cube(`default`, {
         }
 
       },
+
+      
+      dataSource: `default`
 });

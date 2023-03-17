@@ -1,56 +1,20 @@
-cube(`Default`, {
+cube(`aa`, {
     sql: `
         SELECT 
-            userId,
-            ctr,
-            cpc,
-            clicks,
-            spend,
-            cpm,
-            impressions,
-            reach,
-            frequency,
-            createdAt,
-            apiId,
-            '총합' as title
+            a.userId,
+            a.clicks as clicks,
+            a.apiId
         FROM 
-            vad2.insight 
-
-        UNION ALL
-
-        SELECT 
-            userId,
-            ctr,
-            cpc,
-            clicks,
-            spend,
-            cpm,
-            impressions,
-            reach,
-            frequency,
-            createdAt,
-            apiId,
-            'facebook' as title
-        FROM 
-            vad2.insight_facebook 
-
-        UNION ALL
+            ${Default.sql()} a 
+        
+        UNION ALL 
         
         SELECT 
-            userId,
-            ctr,
-            cpc,
-            clicks,
-            spend,
-            cpm,
-            impressions,
-            reach,
-            frequency,
-            createdAt,
-            apiId,
-            'google' as title
+            b.userId, 
+            b.\`data.clicks\` as clicks,
+            b.apiId
         FROM 
-            vad2.insight_google 
+            ${facebook.sql()} b
     `,
       
     preAggregations: {},
@@ -73,10 +37,6 @@ cube(`Default`, {
         cpc: {
           type: `number`,
           sql: `ROUND((${spend}/${clicks}), 2)`,
-        },
-        clicks: {
-            type: `sum`,
-            sql: `clicks`,
         },
         totalSpend: {
           type: `sum`,
@@ -120,15 +80,20 @@ cube(`Default`, {
           primaryKey: true,
         },
 
-        title: {
-            sql: `title`,
+        apiId: {
+            sql: `apiId`,
             type: `string`,
           },
         
         userId: {
           sql: `userId`,
           type: `string`,
-        },  
+        },
+
+        clicks: {
+            sql: `clicks`,
+            type: `string`,
+        },
 
         createdAt: {
             sql: `createdAt`,

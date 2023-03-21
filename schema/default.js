@@ -77,6 +77,7 @@ cube(`Default`, {
         clicks: {
             type: `sum`,
             sql: `clicks`,
+            title: `링크클릭`,
         },
         totalSpend: {
           type: `sum`,
@@ -85,6 +86,7 @@ cube(`Default`, {
         spend: {
           type: `number`,
           sql: `ROUND(${totalSpend}, 2)`,
+          title: `광고비용`,
         },
         // cpm: {
         //   type: `sum`,
@@ -97,10 +99,12 @@ cube(`Default`, {
         impressions: {
           type: `sum`,
           sql: `impressions`,
+          title: `노출`,
         },
         reach: {
             type: `sum`,
             sql: `reach`,
+            title: `도달`,
         },
         // frequency: {
         //     type: `sum`,
@@ -109,6 +113,7 @@ cube(`Default`, {
         frequency: {
           type: `number`,
           sql: `ROUND((${impressions}/${reach}), 2)`,
+          title: `빈도`,
         },
       },
       
@@ -123,6 +128,7 @@ cube(`Default`, {
         title: {
             sql: `title`,
             type: `string`,
+            title: `광고소재`,
           },
         
         userId: {

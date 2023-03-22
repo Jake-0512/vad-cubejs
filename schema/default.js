@@ -1,4 +1,4 @@
-cube(`Default`, {
+cube(`default`, {
     sql: `
         SELECT 
             userId,
@@ -77,7 +77,7 @@ cube(`Default`, {
         clicks: {
             type: `sum`,
             sql: `clicks`,
-            title: `링크클릭`,
+            title: `링크 클릭`,
         },
         totalSpend: {
           type: `sum`,
@@ -86,7 +86,7 @@ cube(`Default`, {
         spend: {
           type: `number`,
           sql: `ROUND(${totalSpend}, 2)`,
-          title: `광고비용`,
+          title: `지출 금액`,
         },
         // cpm: {
         //   type: `sum`,

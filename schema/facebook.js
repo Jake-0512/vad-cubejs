@@ -22,7 +22,8 @@ cube(`facebook`, {
     },
     clicks: {
       type: `sum`,
-      sql: `${CUBE}.\`data.clicks\``
+      sql: `${CUBE}.\`data.clicks\``,
+      title: `링크 클릭`,
     },
     totalSpend: {
       type: `sum`,
@@ -31,6 +32,7 @@ cube(`facebook`, {
     spend: {
       type: `number`,
       sql: `ROUND(${totalSpend}, 2)`,
+      title: `지출 금액`,
     },
     // cpm: {
     //   type: `sum`,
@@ -42,11 +44,13 @@ cube(`facebook`, {
     },
     impressions: {
       type: `sum`,
-      sql: `${CUBE}.\`data.impressions\``
+      sql: `${CUBE}.\`data.impressions\``,
+      title: `노출`,
     },
     reach: {
       type: `sum`,
-      sql: `${CUBE}.\`data.reach\``
+      sql: `${CUBE}.\`data.reach\``,
+      title: `도달`,
     },
     // frequency: {
     //   type: `sum`,
@@ -55,6 +59,7 @@ cube(`facebook`, {
     frequency: {
       type: `number`,
       sql: `ROUND((${impressions}/${reach}), 2)`,
+      title: `빈도`,
     },
   },
   dimensions: {
@@ -72,7 +77,8 @@ cube(`facebook`, {
         ],
         else: { label: `단계 미지정` },
       },
-      type: `string`
+      type: `string`,
+      title: `광고소재`,
     },
     userId: {
       sql: `userId`,

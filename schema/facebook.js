@@ -86,6 +86,14 @@ cube(`facebook`, {
       sql: `${CUBE}.\`data.adset_id\``,
       type: `string`
     },
+    imageUrl: {
+      sql: `${CUBE}.\`imageUrl\``,
+      type: `string`
+    },
+    thumbnailUrl: {
+      sql: `${CUBE}.\`thumbnailUrl\``,
+      type: `string`
+    },
     createdAt: {
       sql: `createdAt`,
       type: `time`

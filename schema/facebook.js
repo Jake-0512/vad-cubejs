@@ -1,24 +1,20 @@
 cube(`facebook`, {
   sql: `SELECT * FROM vad2.user_facebook`,
-  preAggregations: {
-  },
+
+  preAggregations: {},
+
   joins: {},
+
   measures: {
-    // ctr: {
-    //   type: `avg`,
-    //   sql: `${CUBE}.\`data.ctr\``
-    // },
     ctr: {
       type: `number`,
       sql: `ROUND((${clicks}/${impressions})*100, 2)`,
+      title: `CTR`,
     },
-    // cpc: {
-    //   type: `sum`,
-    //   sql: `${CUBE}.\`data.cpc\``
-    // },
     cpc: {
       type: `number`,
       sql: `ROUND((${spend}/${clicks}), 2)`,
+      title: `CPC`,
     },
     clicks: {
       type: `sum`,
@@ -34,13 +30,10 @@ cube(`facebook`, {
       sql: `ROUND(${totalSpend}, 2)`,
       title: `지출 금액`,
     },
-    // cpm: {
-    //   type: `sum`,
-    //   sql: `${CUBE}.\`data.cpm\``
-    // },
     cpm: {
       type: `number`,
       sql: `ROUND((${spend}/${impressions})*1000, 2)`,
+      title: `CPM`,
     },
     impressions: {
       type: `sum`,
@@ -52,16 +45,13 @@ cube(`facebook`, {
       sql: `${CUBE}.\`data.reach\``,
       title: `도달`,
     },
-    // frequency: {
-    //   type: `sum`,
-    //   sql: `${CUBE}.\`data.frequency\``
-    // }
     frequency: {
       type: `number`,
       sql: `ROUND((${impressions}/${reach}), 2)`,
       title: `빈도`,
     },
   },
+
   dimensions: {
     _id: {
       sql: `_id`,
@@ -101,6 +91,6 @@ cube(`facebook`, {
       type: `time`
     }
   },
+  
   dataSource: `facebook`
 });
-// console.log(`facebook schema defined with dimensions:`, JSON.stringify(facebook.dimensions));
